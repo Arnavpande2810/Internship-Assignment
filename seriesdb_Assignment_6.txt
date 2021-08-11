@@ -1,0 +1,79 @@
+-- create a table director
+CREATE TABLE director
+(
+DirectorID int primary key,
+DirectorName varchar(20)
+);
+-- insert some values
+INSERT INTO director VALUES (101,'Mayank Sharma');
+INSERT INTO director VALUES (102,'Marta kauffman');
+INSERT INTO director VALUES (103,'Hayato Date');
+INSERT INTO director VALUES (104,'Colin Budds');
+INSERT INTO director VALUES (105,'Coky Giedroyc');
+-- fetch some values
+SELECT * FROM director;
+
+-- create a table genre
+CREATE TABLE genre
+(
+ GenreID int Primary key,
+ Genrename varchar(20)
+);
+-- insert some values
+INSERT INTO genre VALUES (111,'Action');
+INSERT INTO genre VALUES (112,'Comedy');
+INSERT INTO genre VALUES (113,'Mystery');
+INSERT INTO genre VALUES (114,'Thriller');
+-- fetch some values
+SELECT * FROM genre;
+
+-- create a table country
+CREATE TABLE country
+(
+CountryID int Primary key, 
+Countryname varchar(20)
+);
+-- insert some values
+INSERT INTO country VALUES (121,'Australia');
+INSERT INTO country VALUES (122,'Japan');
+INSERT INTO country VALUES (123,'UK');
+INSERT INTO country VALUES (124,'India');
+INSERT INTO country VALUES (125,'USA');
+-- fetch some values
+SELECT * FROM country; 
+
+-- create a table series
+CREATE TABLE series
+(
+Seriesname varchar(20) Primary key, 
+DirectorID int,
+CountryID int,
+GenreID int,
+Yor int,
+Yoe int,
+Sstatus varchar(20),
+FOREIGN KEY (DirectorID) REFERENCES director(DirectorID),
+FOREIGN KEY (CountryID) REFERENCES country(CountryID),
+FOREIGN KEY (GenreID) REFERENCES genre(GenreID)
+);
+-- insert some values
+INSERT INTO series VALUES ('Friends',102,125,112,1994,2004,'Ended');
+INSERT INTO series VALUES ('H2O',104,121,112,2017,2021,'ongoing');
+INSERT INTO series VALUES ('Sherlock Holmes',105,123,113,2010,2014,'Ended');
+INSERT INTO series VALUES ('Naruto',103,122,111,2004,2021,'ongoing');
+INSERT INTO series VALUES ('Breathe',101,124,114,2018,2020,'Ended');
+-- fetch some values
+SELECT * FROM series; 
+
+
+-- Q3
+select series.Seriesname,director.DirectorName,genre.Genrename,country.Countryname from series 
+inner join director on series.DirectorID=director.DirectorID
+inner join genre on series.GenreID=genre.GenreID
+inner join country on series.CountryID=country.CountryID
+WHERE country.Countryname='USA' and series.Sstatus='Ended';
+
+-- Q4
+SELECT Seriesname from series WHERE  Yor between 2010 AND 2021;
+-- Q5
+SELECT Seriesname from series WHERE  Yor between 2000 AND 2010;
